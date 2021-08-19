@@ -20,7 +20,7 @@
 
 ## 網頁畫面
 
-![image]](https://raw.githubusercontent.com/Linus-Peng1/AC_todo-sequelize/main/todo-sequelize_1.PNG)
+![image](https://raw.githubusercontent.com/Linus-Peng1/AC_todo-sequelize/main/todo-sequelize_1.PNG)
 
 ![image](https://raw.githubusercontent.com/Linus-Peng1/AC_todo-sequelize/main/todo-sequelize_2.PNG)
 
