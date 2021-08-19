@@ -5,19 +5,24 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 
+// 透過 dotenv 套件，讀取 .env 檔
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 // const usePassport = require('./config/passport') 是載入一包 Passport 設定檔
 // const passport = require('passport') 是把 Passport 套件本身載入進來
 const usePassport = require('./config/passport.js')
 const routes = require('./routes/index.js')
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
