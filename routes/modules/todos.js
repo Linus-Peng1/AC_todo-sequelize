@@ -24,10 +24,42 @@ router.post('/', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 編輯資料
+router.get('/:id/edit', (req, res) => {
+  const UserId = req.user.id
+  const id = req.params.id
+
+  return Todo.findOne({ where: { id, UserId } })
+    .then(todo => res.render('edit', { todo: todo.get() })) // 轉換 todo 資料
+    .catch(error => console.log(error))
+})
+
+router.put('/:id', (req, res) => {
+  const UserId = req.user.id
+  const id = req.params.id
+  const { name, isDone } = req.body
+  const errors = []
+
+  if (!(name.trim())) {
+    errors.push({ 'message': '欄位不可為空白。' })
+    return res.render('edit', { errors })
+  }
+
+  return Todo.findOne({ where: { id, UserId } })
+    .then(todo => {
+      todo.name = name
+      todo.isDone = isDone === 'on'
+      return todo.save()
+    })
+    .then(() => res.redirect(`/todos/${id}`))
+    .catch(error => console.log(error))
+})
+
 // 詳細資料
 router.get('/:id', (req, res) => {
   const UserId = req.user.id
   const id = req.params.id
+
   return Todo.findOne({
     where: { id, UserId } // 尋找符合 id = id 及 UserId = UserId 的 todo
   })
