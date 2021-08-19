@@ -11,7 +11,13 @@ router.get('/new', (req, res) => {
 
 router.post('/', (req, res) => {
   const UserId = req.user.id // user 已在 passport 被存進 req
-  const name = req.body.name
+  const name = req.body.name.trim()
+  const errors = []
+
+  if (!name) {
+    errors.push({ 'message': '欄位不可為空白。' })
+    return res.render('new', { errors })
+  }
 
   return Todo.create({ name, UserId })
     .then(() => res.redirect('/'))
